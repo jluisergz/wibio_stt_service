@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  stt-engine:
+    image: rhasspy/wyoming-whisper:latest
+    container_name: wibio-stt-engine
+    restart: unless-stopped
+    command:
+      - --model
+      - ${WHISPER_MODEL:-tiny}
+      - --language
+      - ${WHISPER_LANGUAGE:-es}
+      - --uri
+      - tcp://0.0.0.0:10300
+      - --data-dir
+      - /data
+    volumes:
+      - stt-data:/data
+    ports:
+      - "${WYOMING_PORT:-10300}:10300"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.4'
+          memory: 350M
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: wibio-stt-gateway
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8005}:8000"
+    environment:
+      - API_KEY=${API_KEY:-wibio_stt_secret_token_change_me}
+      - WYOMING_HOST=${WYOMING_HOST:-stt-engine}
+      - WYOMING_PORT=${WYOMING_PORT:-10300}
+      - WHISPER_LANGUAGE=${WHISPER_LANGUAGE:-es}
+    depends_on:
+      - stt-engine
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 150M
+
+volumes:
+  stt-data:
+    name: wibio-stt-data

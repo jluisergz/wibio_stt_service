@@ -1,0 +1,63 @@
+# Entornos y Credenciales
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos Virtuales
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Datos y Audios Locales de Prueba
+stt-data/
+data/
+*.wav
+*.mp3
+*.ogg
+*.opus
+*.webm
+*.m4a
+*.flac
+*.aac
+
+# Logs y Temporales
+*.log
+tmp/
+temp/
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
